@@ -14,7 +14,9 @@ we don't intend to support this going forward.
 
 ### Building
 Just do:
-   scons
+
+    scons
+
 The binaries will be built under *build/*. 
 
 ## Platform-specific notes
@@ -35,7 +37,7 @@ This fails because you placed the binary on a network share.  Microsoft broke yo
 issue, move the binary to a local hard drive.
 
 ### Solaris
-Though this will build on Solaris, I haven't gotten ito to work. 
+Though this will build on Solaris, I haven't gotten it to work. 
 
 ### Linux
 If you want to build a Windows binary using a cross-compiler hosted on an
