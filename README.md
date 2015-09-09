@@ -14,7 +14,9 @@ we don't intend to support this going forward.
 
 ### Building
 Just do:
-   scons
+
+    scons
+
 The binaries will be built under *build/*. 
 
 ## Platform-specific notes
