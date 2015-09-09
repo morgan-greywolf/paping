@@ -44,6 +44,6 @@ If you want to build a Windows binary using a cross-compiler hosted on an
 Ubuntu-ish or Debian-ish distro, you can install the packages *mingw32*,
 *mingw32-binutils*, and *mingw32-runtime*.   Then just do:
 
-    CXX=i586-mingw32-g++ CCFLAGS=-DWIN32 scons
+    CXX=i586-mingw32msvc-g++ CCFLAGS=-DWIN32 scons
 
 
