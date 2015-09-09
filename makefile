@@ -1,3 +1,9 @@
 all:
-	g++ -m32 ./src/print.cpp ./src/stats.cpp ./src/timer.cpp ./src/arguments.cpp ./src/i18n.cpp ./src/host.cpp ./src/socket.cpp ./src/main.cpp -o ./bin/i386-paping
-	g++ -m64 ./src/print.cpp ./src/stats.cpp ./src/timer.cpp ./src/arguments.cpp ./src/i18n.cpp ./src/host.cpp ./src/socket.cpp ./src/main.cpp -o ./bin/x86-64-paping
+	scons
+win32:
+	CXX ?= i586-mingw32msvc-g++
+	CCFLAGS ?= -DWIN32
+	scons
+	strip build/paping.exe
+clean:
+	scons -c

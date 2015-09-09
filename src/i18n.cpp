@@ -26,6 +26,9 @@ pcc_t i18n_c::GetString(int id)
 
 		case ERROR_POUTOFMEMORY:					return	"Out of memory";
 		case ERROR_SOCKET_TIMEOUT:				return	"$Connection timed out$";
+     	#ifdef WIN32	
+		case ERROR_SOCKET_WINSOCKFAILURE:		return	"$Winsock initialization failure$";
+        #endif
 		case ERROR_SOCKET_GENERALFAILURE:		return	"$General failure$";
 		case ERROR_SOCKET_CANNOTRESOLVE:		return	"$Cannot resolve host$";
 

@@ -1,11 +1,8 @@
 #include "standard.h"
 
-
 using namespace std;
 
-
 int print_c::initialColors_ = 0;
-
 
 void print_c::FormattedPrint(int color, pcc_t data)
 {
@@ -119,3 +116,4 @@ void  print_c::ResetColor()
 	printf("\033[22;%dm", 0);
 	#endif
 }
+

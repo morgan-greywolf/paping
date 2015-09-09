@@ -6,7 +6,8 @@ using namespace std;
 
 void arguments_c::PrintBanner()
 {
-	cout << "paping v" << VERSION << " - Copyright (c) " << YEAR << " " << AUTHOR << endl << endl;
+	cout << "paping Version " << VERSION << "\nCopyright (c) 2011 Mike Lovell\n"
+        "Copyright (c) " << YEAR << " " << AUTHOR << endl << endl;
 }
 
 
@@ -110,3 +111,4 @@ int	arguments_c::match(int pos, int total, pc_t argv[], pcc_t shortName, pcc_t l
 
 	return SUCCESS;
 }
+

@@ -6,14 +6,16 @@
 	#pragma comment(lib, "ws2_32.lib")
 #endif
 
-#define	VERSION	"1.5.5"
-#define	AUTHOR	"Mike Lovell"
+#define	VERSION	"1.5.6"
+#define	AUTHOR	"Rob A. Shinn"
 #define YEAR	((((__DATE__ [7] - '0') * 10 + (__DATE__ [8] - '0')) * 10 + (__DATE__ [9] - '0')) * 10 + (__DATE__ [10] - '0'))
 
+/*
 #ifdef WIN32
 	#define close	closesocket
-	#define snprintf _snprintf
+    #define snprintf _snprintf 
 #endif
+*/
 
 // Error codes
 #define	SUCCESS						0
@@ -21,6 +23,7 @@
 #define	ERROR_SOCKET_CANNOTRESOLVE	101
 #define	ERROR_SOCKET_TIMEOUT		102
 #define	ERROR_SOCKET_GENERALFAILURE	103
+#define	ERROR_SOCKET_WINSOCKFAILURE	105
 #define	ERROR_INVALIDARGUMENTS		200
 
 
@@ -31,8 +34,8 @@
 #include <stdio.h>
 
 #ifdef WIN32	// Windows specific
-	#include <Windows.h>
-	#include <WinSock2.h>
+	#include <windows.h>
+	#include <winsock2.h> 
 	#include <time.h>
 	#include "gettimeofday.h"
 #else			// Linux specific
@@ -62,5 +65,4 @@ typedef	unsigned	short		ushort_t;
 #include "arguments.h"
 #include "host.h"
 #include "socket.h"
-
 

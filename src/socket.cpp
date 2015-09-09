@@ -8,7 +8,7 @@ int socket_c::Resolve(pcc_t hostname, host_c &host)
 
 	#ifdef WIN32	// Init Winsock in Windows
 		WSADATA	wsaData;
-		if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) return ERROR_SOCKET_GENERALFAILURE;
+		if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) return ERROR_SOCKET_WINSOCKFAILURE;
 	#endif
 
 	remoteHost = gethostbyname(hostname);
@@ -71,12 +71,17 @@ int socket_c::Connect(host_c host, int timeout, double &time)
 
 	#ifdef WIN32	// Init Winsock in Windows
 		WSADATA	wsaData;
-		if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) return ERROR_SOCKET_GENERALFAILURE;
+		if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) return ERROR_SOCKET_WINSOCKFAILURE;
 	#endif
 
 	clientSocket = socket(AF_INET, socket_c::GetSocketType(host.Type), host.Type);
 
-	if (clientSocket == -1) return ERROR_SOCKET_GENERALFAILURE;
+	if (clientSocket == -1) { 
+        #ifdef WIN32
+        fprintf(stderr,"socket(): failed with error %d\n", WSAGetLastError());
+	    #endif
+        return ERROR_SOCKET_GENERALFAILURE;
+    }
 
 	sockaddr_in	clientAddress;
 
