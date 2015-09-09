@@ -1,4 +1,6 @@
 # README for paping 
+This project intends to continue the work of Mike Lovell's paping from Google Code as an official fork. Binary releases will be available in the [releases branch](https://github.com/morgan-greywolf/paping/tree/releases).
+
 ## Building from source
 ### General build requirements 
 * g++
