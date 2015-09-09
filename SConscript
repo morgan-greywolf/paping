@@ -27,16 +27,16 @@ if sys.platform == 'win32':
     env = Environment(ENV=os.environ,tools=['mingw'])
     env.Append(LIBS="wsock32")
 else:
+    if 'CXX' in os.environ:
+        cxx = os.environ['CXX']
+    else:
+        cxx = 'g++'
     env = Environment(CCFLAGS=ccflags,CXX=cxx)
     if '-DWIN32' in ccflags:  # we are doing a cross-compile
         bin="paping.exe"
         env.Append(LIBS="wsock32")
     else:
         bin="paping"
-    if 'CXX' in os.environ:
-        cxx = os.environ['CXX']
-    else:
-        cxx = 'g++'
 
 all = env.Program(target = bin, 
             source = [
