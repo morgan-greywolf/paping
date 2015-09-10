@@ -1,4 +1,6 @@
 # README for paping 
+This project intends to continue the work of Mike Lovell's paping from Google Code as an official fork. Binary releases will be available in the [releases branch](https://github.com/morgan-greywolf/paping/tree/releases).
+
 ## Building from source
 ### General build requirements 
 * g++
@@ -44,7 +46,7 @@ If you want to build a Windows binary using a cross-compiler hosted on an
 Ubuntu-ish or Debian-ish distro, you can install the packages *mingw32*,
 *mingw32-binutils*, and *mingw32-runtime*.   Then just do:
 
-    CXX=i586-mingw32-g++ CCFLAGS=-DWIN32 scons
+    CXX=i586-mingw32msvc-g++ CCFLAGS=-DWIN32 scons
 
 If you want to build a Windows x86-64 binary using a cross-compiler hosted on an
 Ubunti-ish or Debian-ish distro, you can install the package *mingw-w64*, then
