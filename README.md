@@ -46,4 +46,10 @@ Ubuntu-ish or Debian-ish distro, you can install the packages *mingw32*,
 
     CXX=i586-mingw32-g++ CCFLAGS=-DWIN32 scons
 
+If you want to build a Windows x86-64 binary using a cross-compiler hosted on an
+Ubunti-ish or Debian-ish distro, you can install the package *mingw-w64*, then
+just do something like:
+
+    CXX=x86_64-mingw-w64-g++ CCFLAGS=-DWIN32 LDFLAGS=-static scons
+
 
