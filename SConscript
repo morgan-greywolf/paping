@@ -4,9 +4,9 @@
   scons build script for paping 
   Copyright © 2015 Rob A. Shinn.  See COPYRIGHT for license terms.
 """
-import sys, os
+import platform, sys, os
 
-if sys.maxint > 2147483647:
+if sys.maxsize > 2**32:
     bits = 64
 else:
     bits = 32
@@ -30,8 +30,12 @@ else:
     if 'CXX' in os.environ:
         cxx = os.environ['CXX']
     else:
-        cxx = 'g++'
-    env = Environment(CCFLAGS=ccflags,CXX=cxx)
+        cxx = "g++"
+    if 'LDFLAGS' in os.environ:
+        linkflags=os.environ['LDFLAGS']
+    else:
+        linkflags=""
+    env = Environment(CCFLAGS=ccflags,CXX=cxx,LINKFLAGS=linkflags)
     if '-DWIN32' in ccflags:  # we are doing a cross-compile
         bin="paping.exe"
         env.Append(LIBS="wsock32")
