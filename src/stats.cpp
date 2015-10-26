@@ -5,7 +5,7 @@ using namespace std;
 
 double stats_c::Average()
 {
-	return (this->Total / this->Attempts);
+	return (this->Total / (this->Attempts - this->Failures));
 }
 
 
