@@ -40,7 +40,7 @@
 	#include <time.h>
 	#include "gettimeofday.h"
   #include <ws2tcpip.h>
-#else			// Linux specific
+#else			// POSIX stuff 
 
 	#include <sys/socket.h>
 	#include <arpa/inet.h>
