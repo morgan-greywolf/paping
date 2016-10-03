@@ -11,7 +11,7 @@
 #define YEAR	((((__DATE__ [7] - '0') * 10 + (__DATE__ [8] - '0')) * 10 + (__DATE__ [9] - '0')) * 10 + (__DATE__ [10] - '0'))
 
 /*
-#ifdef WIN32
+#ifdef WIN32#include <ws2tcpip.h>#include <ws2tcpip.h>
 	#define close	closesocket
     #define snprintf _snprintf 
 #endif
@@ -27,6 +27,7 @@
 #define	ERROR_INVALIDARGUMENTS		200
 
 
+#include <errno.h>
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
@@ -38,6 +39,7 @@
 	#include <winsock2.h> 
 	#include <time.h>
 	#include "gettimeofday.h"
+  #include <ws2tcpip.h>
 #else			// Linux specific
 
 	#include <sys/socket.h>

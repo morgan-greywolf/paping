@@ -76,10 +76,11 @@ int socket_c::Connect(host_c host, int timeout, double &time)
 
 	clientSocket = socket(AF_INET, socket_c::GetSocketType(host.Type), host.Type);
 
-	if (clientSocket == -1) { 
+	if (clientSocket == -1) {
         #ifdef WIN32
         fprintf(stderr,"socket(): failed with error %d\n", WSAGetLastError());
 	    #endif
+        fprintf(stderr,"socket(): failed with error %s\n", strerror(errno));
         return ERROR_SOCKET_GENERALFAILURE;
     }
 
@@ -90,7 +91,7 @@ int socket_c::Connect(host_c host, int timeout, double &time)
 	clientAddress.sin_port		= htons(host.Port);
 
 	timeval	tv;
-	
+
 	// No blocking for Windows/Linux
 	#ifdef WIN32
 		ULONG	mode = 1;
@@ -106,10 +107,27 @@ int socket_c::Connect(host_c host, int timeout, double &time)
 
 	timer_c	timer;
 
-	timer.Start();		
+	timer.Start();
+    int optval, error;
+    socklen_t optlen;
 
-	connect(clientSocket, (sockaddr*)&clientAddress, sizeof(clientAddress));
-
+	result = connect(clientSocket, (sockaddr*)&clientAddress, sizeof(clientAddress));
+    if (result == -1) {
+        if (errno == EINPROGRESS) {
+#ifdef WIN32 /* Windows */
+            getsockopt(clientSocket + 1,  SOL_SOCKET,
+                       SO_ERROR, (const void*)(&optval), &optlen);
+#else /* POSIX */
+            getsockopt(clientSocket + 1,  SOL_SOCKET,
+                       SO_ERROR, &optval, &optlen);
+#endif /* */
+            error = optval;
+        } else {
+            error = errno;
+        }
+    } else {
+        fprintf(stderr, ":-)");
+    }
 	fd_set	read, write;
 
 	FD_ZERO(&read);
@@ -117,12 +135,15 @@ int socket_c::Connect(host_c host, int timeout, double &time)
 
 	FD_SET(clientSocket, &read);
 	FD_SET(clientSocket, &write);
-	
+
 	result = select(clientSocket + 1, &read, &write, NULL, &tv);
-	
+    if (result == -1) {
+        fprintf(stderr,"connect(): %s\n", strerror(errno));
+    }
 	if (result != 1)
 	{
-		close(clientSocket);
+        fprintf(stderr,"connect(): %s %d\n", strerror(errno), result);
+        close(clientSocket);
 
 		#ifdef WIN32	// Cleanup Winsock in Windows
 			WSACleanup();
@@ -135,6 +156,7 @@ int socket_c::Connect(host_c host, int timeout, double &time)
 
 	if (!FD_ISSET(clientSocket, &read) && !FD_ISSET(clientSocket, &write))
 	{
+        //fprintf(stderr,"connect(): %s\n", strerror(errno));
 		close(clientSocket);
 
 		#ifdef WIN32	// Cleanup Winsock in Windows
